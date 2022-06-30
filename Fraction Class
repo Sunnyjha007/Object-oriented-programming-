@@ -1,0 +1,69 @@
+//Codestudio - Fraction Class
+#include<iostream>
+
+#include<algorithm>
+
+using namespace std;
+
+class Fraction {
+
+    // Complete the class
+    int numerator;
+    int denominator;
+
+    public:
+    Fraction(int num,int den){
+        numerator = num;
+        denominator = den;
+    }
+    void print(){
+        cout<<numerator<<"/"<<denominator<<endl;
+    }
+    void simplify(){
+        int gcd = 1;
+        int mini = min(numerator,denominator);
+        for(int i=1;i<=mini;i++){
+            if(numerator%i==0&&denominator%i==0)gcd=i;
+        }
+        numerator = numerator/gcd;
+        denominator = denominator/gcd;
+    }
+    void add(Fraction const &f2){
+        int lcm = denominator*f2.denominator;
+        int num = numerator*f2.denominator + f2.numerator*denominator;
+        numerator=num;
+        denominator = lcm;
+        simplify();
+    }
+    void multiply(Fraction const &f2){
+        numerator = numerator*f2.numerator;
+        denominator = denominator*f2.denominator;
+        simplify();
+    }
+
+};
+
+int main() {
+
+    //Write your code here
+    int n,d;
+    cin>>n>>d;
+    Fraction f1(n,d);
+    int t;
+    cin>>t;
+    while(t--){
+        int choice;
+        cin>>choice;
+        int f,s;
+        cin>>f>>s;
+        Fraction f2(f,s);
+        if(choice==1){
+            f1.add(f2);
+        }else {
+            f1.multiply(f2);
+        }
+        f1.print();
+    }
+
+    return 0;
+}
